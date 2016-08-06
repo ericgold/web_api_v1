@@ -1,3 +1,8 @@
 @import 'utilities/_index';
 @import 'gallery/_index';
 @import 'lightbox/_index';
+
+* {
+	box-sizing: border-box;
+}
+

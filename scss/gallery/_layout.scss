@@ -1,7 +1,3 @@
-* {
-	box-sizing: border-box;
-}
-
 /* FLEXBOX STYLES */
 
 .main-header, 
@@ -28,7 +24,7 @@
 .search {
 	height: 2.5em;
 	font-size: 16px;
-	border: 2px solid #e5e5e5;
+	border: 2px solid $primary-color;
 	border-radius: 5px;
 	width: 90%;
 	max-width: 460px;
@@ -36,7 +32,7 @@
 
 .search:focus {
 	outline: none;
-	border: 2px solid #85b46b;
+	border: 2px solid $secondary-color;
 }
 
 /* GALLERY STYLES */
