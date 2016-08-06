@@ -1,0 +1,57 @@
+// Flexbox Mixin ////////////////////////
+
+@mixin flexy($direction, $align-items: null) {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: $direction;
+	flex-direction: $direction;
+	-webkit-align-items: $align-items;
+	align-items: $align-items;
+}
+
+// Media Query Mixins ///////////////////
+
+// Breakpoint Variables
+
+$brkpoint-sm: 1px;
+$brkpoint-sm-md: 480px;
+$brkpoint-md: 768px;
+$brkpoint-lg: 1024px;
+$brkpoint-x-lg: 1280px;
+
+// Media Queries
+
+@mixin mq($break) {
+	@if $break == "small" {
+		@media(min-width: $brkpoint-sm) and (max-width: $brkpoint-md -1) {
+			@content;
+		}
+	}
+	@else if $break == "small-medium" {
+		@media(min-width: $brkpoint-sm-md) {
+			@content;
+		}
+	}
+	@else if $break == "medium" {
+		@media(min-width: $brkpoint-md) {
+			@content;
+		}
+
+	}
+	@else if $break == "large" {
+		@media(min-width: $brkpoint-lg) {
+			@content;
+		}
+	}
+	@else if $break == "extra-large" {
+		@media(min-width: $brkpoint-x-lg) {
+			@content;
+		}
+	}
+	@else {
+		@error "No value found for '#{$break}'";
+	}
+}
