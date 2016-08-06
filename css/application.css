@@ -55,7 +55,10 @@
       flex-wrap: wrap; } }
 
 .thumbnail {
-  margin: 30px auto 30px; }
+  height: 200px;
+  width: 200px;
+  margin: 30px auto 30px;
+  background-color: #85b46b; }
   @media (min-width: 480px) {
     .thumbnail {
       margin: 0 30px 60px 30px; } }

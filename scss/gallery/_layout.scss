@@ -52,7 +52,11 @@
 }
 
 .thumbnail {
+	height: 200px;
+	width: 200px;
 	margin: 30px auto 30px;
+	background-color: $secondary-color;
+
 
 	@include mq(small-medium) {
 		margin: 0 30px 60px 30px;
