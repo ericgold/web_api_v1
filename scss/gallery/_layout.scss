@@ -35,6 +35,26 @@
 	border: 2px solid $secondary-color;
 }
 
+/* FLICKR FILTER BUTTON STYLES */
+
+.filter-select {
+	@include flexy(row, center);
+	justify-content: center;
+	width: 100%;
+	list-style: none;
+	padding: none;
+
+	li {
+		width: 20%;
+		height: 4em;
+		padding: 1em;
+
+		button {
+			width: 100%;
+		}
+	}
+}
+
 /* GALLERY STYLES */
 
 
@@ -52,10 +72,10 @@
 }
 
 .thumbnail {
-	height: 200px;
-	width: 200px;
+	//height: 200px;
+	//width: 200px;
 	margin: 30px auto 30px;
-	background-color: $secondary-color;
+	//background-color: $secondary-color;
 
 
 	@include mq(small-medium) {

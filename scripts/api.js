@@ -1,4 +1,4 @@
-
+/*
 // Script for API 
 
 var $gallery = $('.gallery');
@@ -15,7 +15,7 @@ function displayTiles(data) {
 
 $.getJSON(swapi, swOptions, displayTiles);
 
-
+*/
 
 
 /*
