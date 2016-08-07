@@ -1,3 +1,4 @@
+/* *** COURSE CODE ***
 $(document).ready(function() {
   $('button').click(function () {
     $("button").removeClass("selected");
@@ -21,3 +22,34 @@ $(document).ready(function() {
     $.getJSON(flickerAPI, flickrOptions, displayPhotos);
   });
 }); // end ready
+*/
+
+var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+var flickrOptions;
+
+function displayPhotos(data) {
+  var galleryHTML = '<div class="gallery">';
+  $.each(data.items, function (i, photo) {
+    galleryHTML += '<div class="thumbnail">';
+    galleryHTML += '<a href="">';
+    galleryHTML += '<img src="' + photo.media.m + '"></div>';
+    
+  });
+  $('.gallery-container').html(galleryHTML);
+}
+
+function sendRequest() {
+  $.getJSON(flickerAPI, flickrOptions, displayPhotos);
+}
+
+function setOptions() {
+  var character = $(this).text();
+  flickrOptions = {
+      tags: character,
+      format: "json"
+  };
+  sendRequest();
+}
+
+$('button').click(setOptions);
+
