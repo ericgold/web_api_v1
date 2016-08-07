@@ -1,19 +1,17 @@
+
 // Script for API 
 
 var $gallery = $('.gallery');
-var swapi = "http://swapi.co/api/";
+var swapi = "http://swapi.co/api/people/1/?jsoncallback=?";
 
 var swOptions = {
-
-}
+  //"name" : "Luke Skywalker"
+};
 
 function displayTiles(data) {
-	$.each(data.items, function(i,tile) {
-
-	});
-}
-
-
+	console.log(data);
+  console.log("hello");
+};
 
 $.getJSON(swapi, swOptions, displayTiles);
 
