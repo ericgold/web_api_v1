@@ -35,6 +35,26 @@
 	border: 2px solid $secondary-color;
 }
 
+/* SPOTIFY FILTER BUTTON STYLES */
+
+.filter-select {
+	@include flexy(row, center);
+	justify-content: center;
+	width: 100%;
+	list-style: none;
+	padding: none;
+
+	li {
+		width: 20%;
+		height: 4em;
+		padding: 1em;
+
+		button {
+			width: 100%;
+		}
+	}
+}
+
 /* GALLERY STYLES */
 
 

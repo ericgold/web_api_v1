@@ -44,6 +44,28 @@
   outline: none;
   border: 2px solid #85b46b; }
 
+/* SPOTIFY FILTER BUTTON STYLES */
+.filter-select {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  list-style: none;
+  padding: none; }
+  .filter-select li {
+    width: 20%;
+    height: 4em;
+    padding: 1em; }
+    .filter-select li button {
+      width: 100%; }
+
 /* GALLERY STYLES */
 .gallery {
   width: 100%;
