@@ -2,20 +2,37 @@
 // Script for API 
 
 var $gallery = $('.gallery');
-var swapi = "http://swapi.co/api/people/1/?jsoncallback=?";
+var swapi = "http://swapi.co/api/species/";
+var $thumbnail = $('.thumbnail');
+var galleryHTML;
 
-var swOptions = {
-  //"name" : "Luke Skywalker"
-};
+
+
+
 
 function displayTiles(data) {
-	console.log(data);
-  console.log("hello");
+  console.log(data);
+	$.each(data.results, function(i, result) {
+    galleryHTML += '<div class="thumbnail">';
+    galleryHTML += data.results[i].name;
+    galleryHTML += '</div>';
+
+  }); //end each
+
+  $('.gallery').html(galleryHTML);
+ 
 };
 
-$.getJSON(swapi, swOptions, displayTiles);
+$.getJSON(swapi, displayTiles);
 
+function showInfo() {
+  console.log("test");
+  //this refers to gallery here. need to get it to refer to clicked thumbnail
+  var $this = this;
+  console.log($this.classList);
+}
 
+$('.gallery').on('click', $thumbnail, showInfo);
 
 
 /*
