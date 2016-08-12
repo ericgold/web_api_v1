@@ -69,7 +69,7 @@ var updateImage = function(imageLocation, imageCaption) {
 	$caption.text(imageCaption);
 };
 
-
+/*
 // On image link click
 $(".thumbnail a").click(function(event){
 	// Prevent default click behavior
@@ -88,7 +88,7 @@ $(".thumbnail a").click(function(event){
 	$overlay.slideDown(imageLocation);
 	
 });
-
+*/
 // Overlay nav arrow button function
 var prevNext = function(prev) {
 	//when prev is false, increase index

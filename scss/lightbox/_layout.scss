@@ -1,6 +1,7 @@
 /* OVERLAY STYLES */
 
-#overlay {
+#overlay,
+#swapiOverlay {
 	background: $overlay-background-color;
 	width: 100%;
 	height: 100%;
@@ -37,7 +38,8 @@
 	outline: none;
 }
 
-#overlay p {
+#overlay p,
+#swapiCaption {
 	color: $text-color-light;
 	width: 60%;
 	max-width: 600px;

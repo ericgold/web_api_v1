@@ -64,7 +64,8 @@
       margin: 0 30px 60px 30px; } }
 
 /* OVERLAY STYLES */
-#overlay {
+#overlay,
+#swapiOverlay {
   background: rgba(0, 0, 0, 0.7);
   width: 100%;
   height: 100%;
@@ -103,7 +104,8 @@
 #overlay button:focus {
   outline: none; }
 
-#overlay p {
+#overlay p,
+#swapiCaption {
   color: #ffffff;
   width: 60%;
   max-width: 600px;
