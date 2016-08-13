@@ -111,7 +111,7 @@ var prevNext = function(prev) {
 
 var postImage = function() {
 	//Get element by index and get its link
-	var newImgSelected = $(".thumbnail").get($index).getElementsByTagName("a");
+	var newImgSelected = $(".thumbnail").get(navIndex).getElementsByTagName("a");
 
 	//Get link info
 	var imageLocation = $(newImgSelected).attr("href");
