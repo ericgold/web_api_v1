@@ -1,5 +1,4 @@
-
-// Script for API 
+// Script for SWAPI 
 
 var $gallery = $('.gallery');
 var swapi = "http://swapi.co/api/species/";
@@ -10,29 +9,26 @@ var $swapiOverlay = $("<div id='swapiOverlay'></div>");
 //var $swapiInnerOverlay = $("<div id='inner-overlay'></div>");
 var $swapiCaption = $("<p id='swapiCaption'></p>");
 
+// array to hold objects containing info for each thumbnail's overlay
 var overlayContents = [];
 
+// start index ids of thumbnails at 0
+var thumbnailIndex = 0;
+
 //constructor function for overlay info objects
-function Species(number, name, designation, classification, language) {
+function Species(number, name, designation, language, average_lifespan) {
   //constructor function for user objects
   this.number = number;
   this.name = name;
   this.designation = designation;
-  this.classification = classification;
   this.language = language;
+  this.average_lifespan = average_lifespan;
   overlayContents.push(this);
 }
 
-/*variables for users
-var user1 = new User('Hart', 'Love', 'hlove@emotion.com', '6/3/16');
-var user2 = new User('Ashley', 'Pike', 'ashp@saranrae.com', '7/6/16');
-var user3 = new User('Dan', 'Mann', 'd.mann@qmail.com', '7/7/16');
-var user4 = new User('Alice', 'Inwonderland', 'alice@rabbithole.com', '7/13/16');
-*/
-var thumbnailIndex = 0;
-
+//add an id to each thumbnail that matches the index of that
+//thumbnail's info in the overlayContents array
 function addIndex() {
-  
   $(this).attr('id', thumbnailIndex);
   thumbnailIndex += 1;
 }
@@ -42,7 +38,6 @@ function displayTiles(data) {
 	$.each(data.results, function(i, result) {
     var index = i;
     galleryHTML += '<div class="thumbnail">';
-
     galleryHTML += '<p>'
     galleryHTML += data.results[i].name;
     galleryHTML += '</p>';
@@ -65,24 +60,33 @@ function displayTiles(data) {
 $.getJSON(swapi, displayTiles);
 
 
-
-
-//NON FUNCTIONAL
-function popSwapiOverlay(arg) {
+function popSwapiOverlay() {
   //this.preventDefault();
   
-  var index = $(arg).attr('id');
-  console.log(index);
-  $swapiCaption.append(overlayContents);
-  $swapiOverlay.append($swapiCaption);
+  var index = $(this).attr('id');
+  //console.log(index);
+  //console.log(overlayContents[index]);
+  var name = overlayContents[index].name;
+  var desig = overlayContents[index].designation;
+  var lang = overlayContents[index].language;
+  var life = overlayContents[index].average_lifespan;
+  
+  var caption = $swapiCaption.text();
+  caption += 'A ' + desig + ' species, the ' + name + ' speak ' + lang +
+'. Their lifespan is ' + life + '.'   
+  //console.log(caption);
+  $(this).append(caption);
+  //$swapiCaption.html(overlayContents[index].designation);
+  //$swapiCaption.append(overlayContents[index].name);
+  //$swapiOverlay.append($swapiCaption);
   //$("body").append($swapiOverlay);
-  console.log($swapiOverlay);
+  
 }
 
 
-$('.gallery').on('click', $thumbnail, popSwapiOverlay);
+$('.gallery').on('click', '.thumbnail', popSwapiOverlay);
 
-//$('.gallery .thumbnail').on('click', popSwapiOverlay);
+
 
 /*
 // On image link click
