@@ -3,21 +3,23 @@ left arrow, and right arrow */
 
 var $overlay = $("<div id='overlay'></div>");
 var $innerOverlay = $("<div id='inner-overlay'></div>");
-var $image = $("<img>");
+
+//var $image = $("<img>");
 var $caption = $("<p id='caption'></p>");
 var $leftArrow = $("<button class='arrow'>&#10094</button>");
 var $rightArrow = $("<button class='arrow'>&#10095</button>");
 
 //variables for video
-var $youtubeOverlay = $('<iframe id="youtube-canvas" frameborder="0" allowfullscreen></iframe>');
+//var $youtubeOverlay = $('<iframe id="youtube-canvas" frameborder="0" allowfullscreen></iframe>');
 
 // Variables for search 
 var $searchField = $("input.search");
-var $thumbnails = $(".thumbnail img");
+
+//var $thumbnails = $(".thumbnail img");
 //var cache = [];
 
 // Keep track of image index for prev/next navigation
-var $index = 0;
+var navIndex = 0;
 
 // Get list of gallery images and track length of list
 var $galleryLength = $thumbnails.length;
@@ -69,7 +71,7 @@ var updateImage = function(imageLocation, imageCaption) {
 	$caption.text(imageCaption);
 };
 
-/*
+
 // On image link click
 $(".thumbnail a").click(function(event){
 	// Prevent default click behavior
@@ -88,22 +90,22 @@ $(".thumbnail a").click(function(event){
 	$overlay.slideDown(imageLocation);
 	
 });
-*/
+
 // Overlay nav arrow button function
 var prevNext = function(prev) {
 	//when prev is false, increase index
 	//when prev is true, decrease index
 	if (!prev) {
-		$index++;
+		navIndex++;
 	} else {
-		$index--;
+		navIndex--;
 	}
 
 	// enables overlay navigation wraparound
-	if ($index < 0) {
-		$index = $galleryLength-1;
-	} else if ($index > $galleryLength-1) {
-		$index = 0;
+	if (navIndex < 0) {
+		navIndex = $galleryLength-1;
+	} else if (navIndex > $galleryLength-1) {
+		navIndex = 0;
 	}
 };
 
