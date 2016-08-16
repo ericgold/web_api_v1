@@ -5,7 +5,7 @@
 */
 
 // base variables
-var swapi = "http://swapi.co/api/species/";
+var speciesSwapi = "http://swapi.co/api/species/";
 var $gallery = $('.gallery');
 var $thumbnail = $('.thumbnail');
 var galleryHTML;
@@ -23,14 +23,17 @@ var thumbnailIndex = 0;
 
 
 // constructor function for overlay info objects
-function Species(number, name, designation, language, average_lifespan, homeworld) {
+function Species(number, name, classification, designation, language, average_lifespan, homeworld) {
   //constructor function for species objects
+
   this.number = number;
   this.name = name;
+  this.classification = classification;
   this.designation = designation;
   this.language = language;
   this.average_lifespan = average_lifespan;
   this.homeworld = homeworld;
+
   overlayContents.push(this);
 }
 
@@ -41,21 +44,36 @@ function addIndex() {
   thumbnailIndex += 1;
 }
 
+
+/*
 function displayTiles(data) {
 	$.each(data.results, function(i, result) {
-    //var index = i;
+    
     galleryHTML += '<div class="thumbnail">';
     galleryHTML += '<p>'
     galleryHTML += data.results[i].name;
     galleryHTML += '</p>';
     galleryHTML += '</div>';
 
+
+
+    var planetUrl = data.results[i].homeworld;
+    console.log(planetUrl);
+
+   $.getJSON(planetUrl, function(planetData) {
+      planetData.name;
+    });
+    
+   
+
     var species = new Species(i,
                               data.results[i].name, 
+                              data.results[i].classification,
                               data.results[i].designation, 
                               data.results[i].language, 
                               data.results[i].average_lifespan,
-                              data.results[i].homeworld);
+                              homeworld
+                              );
 
   }); //end each
   //adds generated thumbnails to the gallery
@@ -65,7 +83,58 @@ function displayTiles(data) {
   $('.thumbnail').each(addIndex);
 };
 
-$.getJSON(swapi, displayTiles);
+*/
+
+function getHomeworld(index, speciesData) {
+  var planetUrl = speciesData.homeworld;
+  var homeworld = $.getJSON(planetUrl, function(planetData) {
+    planetData.results.name;
+  });
+
+  //console.log();
+
+  makeSpecies(index, speciesData, homeworld);
+}
+
+function makeSpecies(index, speciesData, homeworld) {
+  var species = new Species (
+      index,
+      speciesData.name,
+      speciesData.classification,
+      speciesData.designation,
+      speciesData.language,
+      speciesData.average_lifespan,
+      homeworld
+    )
+}
+
+function speciesTiles(data) {
+  $.each(data.results, function(i, result) {
+    var speciesData = data.results[i];
+    getHomeworld(i, speciesData);
+    makeSpecies(i, speciesData);
+
+    galleryHTML += '<div class="thumbnail">';
+    galleryHTML += '<p>'
+    galleryHTML += data.results[i].name;
+    galleryHTML += '</p>';
+    galleryHTML += '</div>';
+
+  }); 
+  //adds generated thumbnails to the gallery
+  $('.gallery').html(galleryHTML);
+  //adds a numerical id to each thumbnail, starting at 0
+  //(this should be changed to use the i from above somehow)
+  $('.thumbnail').each(addIndex);
+}
+
+
+$.getJSON(speciesSwapi, speciesTiles);
+
+
+
+
+
 
 
 /*
@@ -117,7 +186,6 @@ function setIndex() {
   var index = $(this).attr('id');
   //matches navIndex to the numerical id attr of the thumbnail
   navIndex = index;
-  console.log('navIndex =' + navIndex);
   makeCaption(navIndex);
 }
 
@@ -137,16 +205,17 @@ function makeCaption(numb) {
   //uses numerical argument
   //corresponding data stored in overlayContents array
   var name = overlayContents[index].name;
+  var classif = overlayContents[index].classification;
   var desig = overlayContents[index].designation;
   var lang = overlayContents[index].language;
   var life = overlayContents[index].average_lifespan;
   var home = overlayContents[index].homeworld;
-  var homeString = String(home);
+  //var homeString = String(home);
 
   //generates caption from the data in overlayContents
-  var caption = 'A ' + desig + ' species, the ' + name + ' speak ' + lang +
-'. Their lifespan is ' + life + '.';  
-
+  var caption = 'A ' + desig + ' ' + classif + ' species, the ' + name + ' speak ' + lang +
+'. Their lifespan is ' + life + ' and they come from ' + home;  
+/*
   var worldName;
 
   function getWorldName(data) {
@@ -161,7 +230,7 @@ function makeCaption(numb) {
   caption += 'Their homeworld is ' + worldName + '.';
 
   //do something with the caption
-
+*/
   prepOverlay(caption);
 };
 
