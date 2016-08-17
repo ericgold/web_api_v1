@@ -16,8 +16,17 @@
 	background: $inner-overlay-background-color;
 	justify-content: center;
 	width: 80%;
+	height: 200px;
 	margin: 10% auto 2%;
 	color: white;
+
+	@include mq(medium) {
+		height: 400px;
+	}
+
+	@include mq(extra-large) {
+		height: 500px;
+	}
 }
 
 .arrow {

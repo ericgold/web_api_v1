@@ -34,7 +34,7 @@ function Species(number, name, classification, designation, language, average_li
   this.average_lifespan = average_lifespan;
   this.homeworld = homeworld;
 
-  overlayContents.push(this);
+  //overlayContents.push(this);
 }
 
 // add an id to each thumbnail that matches the index of that
@@ -85,40 +85,48 @@ function displayTiles(data) {
 
 */
 
-function getHomeworld(index, speciesData) {
+
+function getHomeworld(i, speciesData) {
   var planetUrl = speciesData.homeworld;
-  var homeworld = $.getJSON(planetUrl, function(planetData) {
-    planetData.results.name;
+  var homeworld;
+  
+
+  $.getJSON(planetUrl, function(data) {
+    homeworld = data.name;
+    
+    makeSpecies(i, speciesData, homeworld);
   });
+    
+  
+};
 
-  //console.log();
+function makeSpecies(i, speciesData, homeworld) {
 
-  makeSpecies(index, speciesData, homeworld);
-}
-
-function makeSpecies(index, speciesData, homeworld) {
   var species = new Species (
-      index,
+      i,
       speciesData.name,
       speciesData.classification,
       speciesData.designation,
       speciesData.language,
       speciesData.average_lifespan,
       homeworld
-    )
+    );
+  overlayContents.push(species);
 }
+
+
 
 function speciesTiles(data) {
   $.each(data.results, function(i, result) {
     var speciesData = data.results[i];
     getHomeworld(i, speciesData);
-    makeSpecies(i, speciesData);
+    
 
-    galleryHTML += '<div class="thumbnail">';
-    galleryHTML += '<p>'
-    galleryHTML += data.results[i].name;
-    galleryHTML += '</p>';
-    galleryHTML += '</div>';
+    galleryHTML += '<div class="thumbnail"><p>';
+    //galleryHTML += '<p>'
+    galleryHTML += speciesData.name;
+    galleryHTML += '</p></div>';
+    //galleryHTML += '</div>';
 
   }); 
   //adds generated thumbnails to the gallery
@@ -126,6 +134,8 @@ function speciesTiles(data) {
   //adds a numerical id to each thumbnail, starting at 0
   //(this should be changed to use the i from above somehow)
   $('.thumbnail').each(addIndex);
+
+
 }
 
 
@@ -182,6 +192,15 @@ function prepOverlay(thing) {
 }
 
 function setIndex() {
+  // overlay contents may be out of order
+  // because of asynchronous return of homeworld data
+  // sort overlayContents here by overlayContents.number,
+  // which correpsonds to the numerical id of the tile
+
+  overlayContents.sort(function(a, b) {
+    return a.number - b.number;
+  });
+
   //sets variable equal to the numerical id attr of the thumbnail
   var index = $(this).attr('id');
   //matches navIndex to the numerical id attr of the thumbnail
@@ -213,24 +232,9 @@ function makeCaption(numb) {
   //var homeString = String(home);
 
   //generates caption from the data in overlayContents
-  var caption = 'A ' + desig + ' ' + classif + ' species, the ' + name + ' speak ' + lang +
-'. Their lifespan is ' + life + ' and they come from ' + home;  
-/*
-  var worldName;
+  var caption = 'A ' + desig + ' ' + classif + ' species, ' + name + ' speak ' + lang +
+'. Their lifespan is ' + life + ' and they come from the planet ' + home + '.';  
 
-  function getWorldName(data) {
-    console.log(data);
-    worldName = data.name;
-    console.log(worldName);
-  }
-
-  $.getJSON(homeString, getWorldName); 
-
-//worldName variable is not available here ************************
-  caption += 'Their homeworld is ' + worldName + '.';
-
-  //do something with the caption
-*/
   prepOverlay(caption);
 };
 
