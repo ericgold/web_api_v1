@@ -18,7 +18,13 @@
 	width: 80%;
 	height: 200px;
 	margin: 10% auto 2%;
-	color: white;
+	color: $secondary-color;
+
+	//scroll
+	text-align: justify;
+	overflow: hidden;
+	transform-origin: 50% 100%;
+	transform: perspective(300px) rotateX(20deg);
 
 	@include mq(medium) {
 		height: 400px;
@@ -27,6 +33,18 @@
 	@include mq(extra-large) {
 		height: 500px;
 	}
+
+	//for scroll
+	&:after {
+		//position: absolute;
+		content: ' ';
+		//left: 0;
+		//right: 0;
+		//top: 0;
+		//bottom: 10%;
+		background-image: linear-gradient(top, rgba(0,0,0,1) 0%, transparent 100%);
+		pointer-events: none;
+	}
 }
 
 .arrow {
@@ -34,8 +52,16 @@
 	width: 15%;
 	font-size: 4em;
 	padding: 40px 10px;
-	color: white;
+	color: $secondary-color;
 	border: none;
+}
+
+#left-arrow {
+	margin-right: auto;
+}
+
+#right-arrow {
+	margin-left: auto;
 }
 
 #swapi-overlay button:focus {
@@ -43,7 +69,14 @@
 }
 
 #swapi-caption {
-	color: $text-color-light;
+	//scroll
+	position: absolute;
+	top: 100%;
+	animation: scroll 60s linear 1s infinite;
+
+	color: $secondary-color;
+	font-family: $font-primary;
+	font-size: 2em;
 	width: 60%;
 	max-width: 600px;
 	margin: auto;
@@ -53,23 +86,11 @@
 .hidden {
 	display: none;
 }
-/*
-#youtube-canvas {
-	width: 426px;
-	height: 240px;
-	margin: auto;
 
-	@include mq(medium) {
-		width: 640px;
-		height: 360px;
-	}
-
-	@include mq(large) {
-		width: 854px;
-		height: 480px;
-	}
+@keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
 }
-*/
 
 
 

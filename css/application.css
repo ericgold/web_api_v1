@@ -30,38 +30,59 @@
   padding: 1em .5em;
   position: fixed;
   width: 100%;
-  background-color: #fff; }
+  background-color: #000000; }
 
+/*
 .search {
-  height: 2.5em;
-  font-size: 16px;
-  border: 2px solid #e5e5e5;
-  border-radius: 5px;
-  width: 90%;
-  max-width: 460px; }
+	height: 2.5em;
+	font-size: 16px;
+	border: 2px solid $primary-color;
+	border-radius: 5px;
+	width: 90%;
+	max-width: 460px;
+}
 
 .search:focus {
-  outline: none;
-  border: 2px solid #85b46b; }
-
+	outline: none;
+	border: 2px solid $secondary-color;
+}
+*/
 /* GALLERY STYLES */
 .gallery {
   width: 100%;
   max-width: 1200px;
   margin: 0px auto;
-  padding-top: 7em; }
+  padding-top: 7em;
+  background-color: #000000; }
   @media (min-width: 480px) {
     .gallery {
       flex-wrap: wrap; } }
 
 .thumbnail {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  justify-content: center;
   height: 200px;
   width: 200px;
   margin: 30px auto 30px;
-  background-color: #85b46b; }
+  padding: 1em;
+  background-color: #000000;
+  border: 2px solid #FFFF82;
+  border-radius: 5%; }
   @media (min-width: 480px) {
     .thumbnail {
       margin: 0 30px 60px 30px; } }
+
+.species-label {
+  color: #FFFF82;
+  font-family: Baloo Da, cursive;
+  font-size: 2em;
+  text-align: center; }
 
 /* OVERLAY STYLES */
 #swapi-overlay {
@@ -89,27 +110,46 @@
   width: 80%;
   height: 200px;
   margin: 10% auto 2%;
-  color: white; }
+  color: #FFFF82;
+  text-align: justify;
+  overflow: hidden;
+  transform-origin: 50% 100%;
+  transform: perspective(300px) rotateX(20deg); }
   @media (min-width: 768px) {
     #swapi-inner-overlay {
       height: 400px; } }
   @media (min-width: 1280px) {
     #swapi-inner-overlay {
       height: 500px; } }
+  #swapi-inner-overlay:after {
+    content: ' ';
+    background-image: linear-gradient(top, black 0%, transparent 100%);
+    pointer-events: none; }
 
 .arrow {
   background-color: transparent;
   width: 15%;
   font-size: 4em;
   padding: 40px 10px;
-  color: white;
+  color: #FFFF82;
   border: none; }
+
+#left-arrow {
+  margin-right: auto; }
+
+#right-arrow {
+  margin-left: auto; }
 
 #swapi-overlay button:focus {
   outline: none; }
 
 #swapi-caption {
-  color: #ffffff;
+  position: absolute;
+  top: 100%;
+  animation: scroll 60s linear 1s infinite;
+  color: #FFFF82;
+  font-family: Baloo Da, cursive;
+  font-size: 2em;
   width: 60%;
   max-width: 600px;
   margin: auto;
@@ -118,24 +158,16 @@
 .hidden {
   display: none; }
 
-/*
-#youtube-canvas {
-	width: 426px;
-	height: 240px;
-	margin: auto;
-
-	@include mq(medium) {
-		width: 640px;
-		height: 360px;
-	}
-
-	@include mq(large) {
-		width: 854px;
-		height: 480px;
-	}
-}
-*/
+@keyframes scroll {
+  0% {
+    top: 100%; }
+  100% {
+    top: -170%; } }
 * {
   box-sizing: border-box; }
+
+body {
+  background-color: #000000;
+  color: #FFFF82; }
 
 /*# sourceMappingURL=application.css.map */

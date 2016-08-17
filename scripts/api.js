@@ -45,54 +45,16 @@ function addIndex() {
 }
 
 
-/*
-function displayTiles(data) {
-	$.each(data.results, function(i, result) {
-    
-    galleryHTML += '<div class="thumbnail">';
-    galleryHTML += '<p>'
-    galleryHTML += data.results[i].name;
-    galleryHTML += '</p>';
-    galleryHTML += '</div>';
-
-
-
-    var planetUrl = data.results[i].homeworld;
-    console.log(planetUrl);
-
-   $.getJSON(planetUrl, function(planetData) {
-      planetData.name;
-    });
-    
-   
-
-    var species = new Species(i,
-                              data.results[i].name, 
-                              data.results[i].classification,
-                              data.results[i].designation, 
-                              data.results[i].language, 
-                              data.results[i].average_lifespan,
-                              homeworld
-                              );
-
-  }); //end each
-  //adds generated thumbnails to the gallery
-  $('.gallery').html(galleryHTML);
-  //adds a numerical id to each thumbnail, starting at 0
-  //(this should be changed to use the i from above somehow)
-  $('.thumbnail').each(addIndex);
-};
-
-*/
-
-
 function getHomeworld(i, speciesData) {
   var planetUrl = speciesData.homeworld;
   var homeworld;
   
-
+  //sends another request for the homeworld data
   $.getJSON(planetUrl, function(data) {
     homeworld = data.name;
+
+    //can add more homeworld data here and include it in
+    //overlay contents via makeSpecies
     
     makeSpecies(i, speciesData, homeworld);
   });
@@ -109,6 +71,7 @@ function makeSpecies(i, speciesData, homeworld) {
       speciesData.designation,
       speciesData.language,
       speciesData.average_lifespan,
+
       homeworld
     );
   overlayContents.push(species);
@@ -119,10 +82,12 @@ function makeSpecies(i, speciesData, homeworld) {
 function speciesTiles(data) {
   $.each(data.results, function(i, result) {
     var speciesData = data.results[i];
+    //homeworld is different because it is stored as a url
+    //needs another request to get its data
     getHomeworld(i, speciesData);
     
 
-    galleryHTML += '<div class="thumbnail"><p>';
+    galleryHTML += '<div class="thumbnail"><p class="species-label">';
     //galleryHTML += '<p>'
     galleryHTML += speciesData.name;
     galleryHTML += '</p></div>';
@@ -157,8 +122,8 @@ $.getJSON(speciesSwapi, speciesTiles);
 var $swapiOverlay = $("<div id='swapi-overlay'></div>");
 var $swapiInnerOverlay = $("<div id='swapi-inner-overlay'></div>");
 var $swapiCaption = $("<p id='swapi-caption'></p>");
-var $leftArrow = $("<button class='arrow'>&#10094</button>");
-var $rightArrow = $("<button class='arrow'>&#10095</button>");
+var $leftArrow = $("<button class='arrow' id='left-arrow'>&#10094</button>");
+var $rightArrow = $("<button class='arrow' id='right-arrow'>&#10095</button>");
 
 // Keep track of image index for prev/next navigation
 var navIndex;
@@ -233,7 +198,7 @@ function makeCaption(numb) {
 
   //generates caption from the data in overlayContents
   var caption = 'A ' + desig + ' ' + classif + ' species, ' + name + ' speak ' + lang +
-'. Their lifespan is ' + life + ' and they come from the planet ' + home + '.';  
+'. Their lifespan is ' + life + '. They come from the planet ' + home + '.';  
 
   prepOverlay(caption);
 };
