@@ -88,17 +88,17 @@ function speciesTiles(data) {
     //homeworld is different because it is stored as a url
     //needs another request to get its data
     getHomeworld(i, speciesData);
-    
 
+    //builds a thumbnail for each species name
     galleryHTML += '<div class="thumbnail"><p class="species-label">';
-    //galleryHTML += '<p>'
     galleryHTML += speciesData.name;
-    galleryHTML += '</p></div>';
-    //galleryHTML += '</div>';
+    galleryHTML += '</p></div>';    
 
   }); 
+  //removes 'undefined' from the galleryHTML 
+  var trimmedGalleryHTML = galleryHTML.substr(9);
   //adds generated thumbnails to the gallery
-  $('.gallery').html(galleryHTML);
+  $('.gallery').append(trimmedGalleryHTML);
   //adds a numerical id to each thumbnail, starting at 0
   //(this should be changed to use the i from above somehow)
   $('.thumbnail').each(addIndex);
@@ -131,13 +131,13 @@ var $rightArrow = $("<button class='arrow' id='right-arrow'>&#10095</button>");
 // Keep track of image index for prev/next navigation
 var navIndex;
 
-
+/*
 // *** COPIED FROM OTHER PROJECT. MAY NEED ADAPTATION ***
 var $thumbnails = $('.thumbnail');
 // Get list of gallery images and track length of list
 var $galleryLength = $thumbnails.length;
 //*******************************************************
-
+*/
 
 $swapiOverlay.append($swapiInnerOverlay);
 //$swapiOverlay.append($swapiCaption);
@@ -271,9 +271,7 @@ function filterTest() {
     filterHomeworld();
   } else if ($languageRadio.prop("checked")) {  
     filterLanguage();
-  } else {
-    alert("please choose a search criteria. May the Force be with you.")
-  }
+  } 
 }
 
 // filter function for search field
