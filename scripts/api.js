@@ -17,6 +17,8 @@ var overlayContents = [];
 // used for adding numerical ids to thumbnails
 var thumbnailIndex = 0;
 
+// Variables for search 
+var $searchField = $("input.search");
 
 //var $galleryLength = $thumbnail.length;
 
@@ -75,6 +77,7 @@ function makeSpecies(i, speciesData, homeworld) {
       homeworld
     );
   overlayContents.push(species);
+  
 }
 
 
@@ -156,15 +159,21 @@ function prepOverlay(thing) {
   $swapiOverlay.slideDown();
 }
 
-function setIndex() {
+function sortOverlayContents() {
   // overlay contents may be out of order
   // because of asynchronous return of homeworld data
+  // or because of search activity?
   // sort overlayContents here by overlayContents.number,
   // which correpsonds to the numerical id of the tile
-
-  overlayContents.sort(function(a, b) {
+    overlayContents.sort(function(a, b) {
     return a.number - b.number;
   });
+}
+
+function setIndex() {
+  
+
+  sortOverlayContents();
 
   //sets variable equal to the numerical id attr of the thumbnail
   var index = $(this).attr('id');
@@ -253,3 +262,55 @@ $swapiOverlay.click(function(event) {
 
 
 $('.gallery').on('click', '.thumbnail', setIndex);
+
+
+var speciesCheckbox = $('#species-checkbox');
+var homeworldCheckbox = $('#homeworld-checkbox');
+var languageCheckbox = $('#language-checkbox');
+
+function filterTest() {
+  //NEED CORRECT CODE TO TEST IF CHECKBOX IS CHECKED
+  if (speciesCheckbox.checked) {
+    filter();
+  } else {
+    alert("please choose a search criteria. May the Force be with you.")
+  }
+}
+// filter function for search field
+function filter() {
+  //return the overlayContents to be in sync with thumbnail ids
+  sortOverlayContents();
+  //sets searchText as whatever is entered in search field
+  var query = $searchField.val();
+  
+  //for each thumbnail div
+  $(".thumbnail").each(function(){
+    //sets altText as the alt attribute 
+    //of the img child of the anchor child of the thumbnail div
+    var thumbId = $(this).attr("id");
+    if (speciesCheckbox.checked === true) {
+        if (overlayContents[thumbId].name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+        $(this).fadeIn();
+      } else {
+        $(this).fadeOut("fast");
+      }
+    }
+    
+
+
+    //if the search term is 'not not present' in the alt text
+    //if (altText.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+      //show the thumbnail (including its child a and a's child img)
+      //$(this).fadeIn();
+    //if the search term is 'not present' in the alt text
+    //} else {
+      //hide the thumbnail and its contents
+      //$(this).fadeOut("fast");
+    //}
+  });
+};
+
+// Triggers filter function on keyup in search field
+$searchField.keyup(filterTest);
+
+
