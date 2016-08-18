@@ -183,15 +183,10 @@ function setIndex() {
 }
 
 function setIndexNav() {
-  makeCaption(navIndex);
+    makeCaption(navIndex);
+  
+  
 }
-
-
-
-//attempt to get homeworld name ********************
-
-
-
 
 function makeCaption(numb) {
   var index = numb;
@@ -264,49 +259,78 @@ $swapiOverlay.click(function(event) {
 $('.gallery').on('click', '.thumbnail', setIndex);
 
 
-var speciesCheckbox = $('#species-checkbox');
-var homeworldCheckbox = $('#homeworld-checkbox');
-var languageCheckbox = $('#language-checkbox');
+var $speciesRadio = $('#species-radio');
+var $homeworldRadio = $('#homeworld-radio');
+var $languageRadio = $('#language-radio');
+
 
 function filterTest() {
-  //NEED CORRECT CODE TO TEST IF CHECKBOX IS CHECKED
-  if (speciesCheckbox.checked) {
-    filter();
+  if ($speciesRadio.prop("checked")) {
+    filterName();
+  } else if ($homeworldRadio.prop("checked")) {
+    filterHomeworld();
+  } else if ($languageRadio.prop("checked")) {  
+    filterLanguage();
   } else {
     alert("please choose a search criteria. May the Force be with you.")
   }
 }
+
 // filter function for search field
-function filter() {
-  //return the overlayContents to be in sync with thumbnail ids
-  sortOverlayContents();
+function filterName() {
   //sets searchText as whatever is entered in search field
   var query = $searchField.val();
-  
+  //return the overlayContents to be in sync with thumbnail ids
+  sortOverlayContents();
   //for each thumbnail div
   $(".thumbnail").each(function(){
     //sets altText as the alt attribute 
     //of the img child of the anchor child of the thumbnail div
     var thumbId = $(this).attr("id");
-    if (speciesCheckbox.checked === true) {
-        if (overlayContents[thumbId].name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+    
+    if (overlayContents[thumbId].name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
         $(this).fadeIn();
       } else {
         $(this).fadeOut("fast");
       }
-    }
+  });
+};
+
+function filterHomeworld() {
+  //sets searchText as whatever is entered in search field
+  var query = $searchField.val();
+  //return the overlayContents to be in sync with thumbnail ids
+  sortOverlayContents();
+  //for each thumbnail div
+  $(".thumbnail").each(function(){
+    //sets altText as the alt attribute 
+    //of the img child of the anchor child of the thumbnail div
+    var thumbId = $(this).attr("id");
     
+    if (overlayContents[thumbId].homeworld.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+        $(this).fadeIn();
+      } else {
+        $(this).fadeOut("fast");
+      }
+  });
+};
 
-
-    //if the search term is 'not not present' in the alt text
-    //if (altText.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
-      //show the thumbnail (including its child a and a's child img)
-      //$(this).fadeIn();
-    //if the search term is 'not present' in the alt text
-    //} else {
-      //hide the thumbnail and its contents
-      //$(this).fadeOut("fast");
-    //}
+function filterLanguage() {
+  //sets searchText as whatever is entered in search field
+  var query = $searchField.val();
+  //return the overlayContents to be in sync with thumbnail ids
+  sortOverlayContents();
+  //for each thumbnail div
+  $(".thumbnail").each(function(){
+    //sets altText as the alt attribute 
+    //of the img child of the anchor child of the thumbnail div
+    var thumbId = $(this).attr("id");
+    
+    if (overlayContents[thumbId].language.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+        $(this).fadeIn();
+      } else {
+        $(this).fadeOut("fast");
+      }
   });
 };
 
