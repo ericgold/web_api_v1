@@ -6,6 +6,8 @@
 
 // base variables
 var speciesSwapi = "http://swapi.co/api/species/";
+var omdb = "http://www.omdbapi.com/?";
+
 var $gallery = $('.gallery');
 var $thumbnail = $('.thumbnail');
 var galleryHTML;
@@ -35,8 +37,6 @@ function Species(number, name, classification, designation, language, average_li
   this.language = language;
   this.average_lifespan = average_lifespan;
   this.homeworld = homeworld;
-
-  //overlayContents.push(this);
 }
 
 // add an id to each thumbnail that matches the index of that
@@ -47,24 +47,49 @@ function addIndex() {
 }
 
 
-function getHomeworld(i, speciesData) {
+
+
+function getFilmInfo(i, speciesData) {
+  var filmUrl = speciesData.films[0];
+  var filmInfo = {};
+
+
+  //sends another request for data from the first
+  //film listed for that species
+  $.getJSON(filmUrl, function(data) {
+    filmInfo.title = data.title;
+    filmInfo.episode = data.episode_id;
+    filmInfo.release_date = data.release_date; 
+  });
+
+  getHomeworld(i, speciesData, filmInfo);
+}
+
+
+function getHomeworld(i, speciesData, filmInfo) {
   var planetUrl = speciesData.homeworld;
-  var homeworld;
-  
+  var homeworld = {};
+  var filmObj = filmInfo;
+
   //sends another request for the homeworld data
   $.getJSON(planetUrl, function(data) {
-    homeworld = data.name;
-
+    homeworld.name = data.name;
+    homeworld.rotationPeriod = data.rotation_period;
+    homeworld.climate = data.climate;
+    homeworld.terrain = data.terrain;
+    homeworld.population = data.population
     //can add more homeworld data here and include it in
     //overlay contents via makeSpecies
     
-    makeSpecies(i, speciesData, homeworld);
+    makeSpecies(i, speciesData, homeworld, filmObj);
   });
     
   
 };
 
-function makeSpecies(i, speciesData, homeworld) {
+
+
+function makeSpecies(i, speciesData, homeworld, filmObj) {
 
   var species = new Species (
       i,
@@ -73,9 +98,10 @@ function makeSpecies(i, speciesData, homeworld) {
       speciesData.designation,
       speciesData.language,
       speciesData.average_lifespan,
-
       homeworld
     );
+
+  species.film = filmObj;
   overlayContents.push(species);
   
 }
@@ -87,7 +113,11 @@ function speciesTiles(data) {
     var speciesData = data.results[i];
     //homeworld is different because it is stored as a url
     //needs another request to get its data
-    getHomeworld(i, speciesData);
+    
+    getFilmInfo(i, speciesData);
+
+    
+    
 
     //builds a thumbnail for each species name
     galleryHTML += '<div class="thumbnail"><p class="species-label">';
@@ -131,14 +161,6 @@ var $rightArrow = $("<button class='arrow' id='right-arrow'>&#10095</button>");
 // Keep track of image index for prev/next navigation
 var navIndex;
 
-/*
-// *** COPIED FROM OTHER PROJECT. MAY NEED ADAPTATION ***
-var $thumbnails = $('.thumbnail');
-// Get list of gallery images and track length of list
-var $galleryLength = $thumbnails.length;
-//*******************************************************
-*/
-
 $swapiOverlay.append($swapiInnerOverlay);
 //$swapiOverlay.append($swapiCaption);
 $('body').append($swapiOverlay);
@@ -148,7 +170,6 @@ $('body').append($swapiOverlay);
 function prepOverlay(thing) {
   $swapiCaption.empty();
   $swapiCaption.append(thing);
-
   // Add left arrow to inner overlay div
   $swapiInnerOverlay.append($leftArrow);
   // Add media to the overlay
@@ -190,19 +211,38 @@ function setIndexNav() {
 
 function makeCaption(numb) {
   var index = numb;
+
+  var currentSpeciesData = overlayContents[index];
+  var currentSpeciesHomeworld = currentSpeciesData.homeworld;
+  var currentSpeciesFilm = currentSpeciesData.film.title;
+
+/*
+    $.getJSON(filmUrl, function(data) {
+    filmInfo.title = data.title;
+    filmInfo.episode = data.episode_id;
+    filmInfo.release_date = data.release_date; 
+  });
+*/
+
   //uses numerical argument
   //corresponding data stored in overlayContents array
-  var name = overlayContents[index].name;
-  var classif = overlayContents[index].classification;
-  var desig = overlayContents[index].designation;
-  var lang = overlayContents[index].language;
-  var life = overlayContents[index].average_lifespan;
-  var home = overlayContents[index].homeworld;
-  //var homeString = String(home);
+  var name = currentSpeciesData.name;
+  var classif = currentSpeciesData.classification;
+  var desig = currentSpeciesData.designation;
+  var lang = currentSpeciesData.language;
+  var life = currentSpeciesData.average_lifespan;
+
+  var planet = currentSpeciesHomeworld.name;
+  var rotationPeriod = currentSpeciesHomeworld.rotation_period;
+  var climate = currentSpeciesHomeworld.climate;
+  var terrain = currentSpeciesHomeworld.terrain;
+  var population = currentSpeciesHomeworld.population;
 
   //generates caption from the data in overlayContents
   var caption = 'A ' + desig + ' ' + classif + ' species, ' + name + ' speak ' + lang +
-'. Their lifespan is ' + life + '. They come from the planet ' + home + '.';  
+'. Their lifespan is ' + life + '. They come from the ' + climate + ' planet ' + planet + 
+',' + ' a ' + ' world with a population of ' + population + '.' + ' ' + name + 
+' appeared in ' + currentSpeciesFilm + '.';  
 
   prepOverlay(caption);
 };
