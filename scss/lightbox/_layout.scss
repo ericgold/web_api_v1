@@ -21,10 +21,16 @@
 	color: $secondary-color;
 
 	//scroll via https://www.sitepoint.com/css3-starwars-scrolling-text/
-	text-align: justify;
+	//text-align: justify;
+
 	overflow: hidden;
 	transform-origin: 50% 100%;
+	-webkit-transform-origin: 50% 100%;
+	-moz-transform-origin: 50% 100%;
+
 	transform: perspective(300px) rotateX(20deg);
+	-webkit-transform: perspective(300px) rotateX(20deg);
+	-moz-transform: perspective(300px) rotateX(20deg);
 
 	@include mq(medium) {
 		height: 400px;
@@ -72,6 +78,9 @@
 	position: absolute;
 	top: 100%;
 	animation: scroll 45s linear 1s infinite;
+	-webkit-animation: scroll 45s linear 1s infinite;
+	-moz-animation: scroll 45s linear 1s infinite;
+	-o-animation: scroll 45s linear 1s infinite;
 
 	color: $secondary-color;
 	font-family: $font-primary;
@@ -87,6 +96,21 @@
 }
 
 @keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+@-webkit-keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+@-moz-keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+@-o-keyframes scroll {
 	0% { top: 100%; }
 	100% { top: -170%; }
 }
