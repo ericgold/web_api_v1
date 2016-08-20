@@ -215,14 +215,40 @@ function makeCaption(numb) {
   var currentSpeciesData = overlayContents[index];
   var currentSpeciesHomeworld = currentSpeciesData.homeworld;
   var currentSpeciesFilm = currentSpeciesData.film.title;
+  var currentSpeciesFilmString = currentSpeciesFilm.toString();
+  //console.log(currentSpeciesFilmString);
+
+  var omdbOptions = {
+    t : currentSpeciesFilmString,
+    type: "movie"
+  }
+
+  var shortPlot = '';
 
 /*
-    $.getJSON(filmUrl, function(data) {
-    filmInfo.title = data.title;
-    filmInfo.episode = data.episode_id;
-    filmInfo.release_date = data.release_date; 
-  });
+  function updateShortPlot(plot) {
+    shortPlot = plot;
+    
+  }
 */
+  function updatePlot(data) {
+    console.log(data);
+    
+    shortPlot += data.Plot;
+    //shortPlot.toString();
+
+    //console.log(shortPlot);
+    //plotData = data.Plot;
+    //plotDataString = plotData.toString();
+    //updateShortPlot(plotDataString);
+    
+    
+  }
+
+  $.getJSON(omdb, omdbOptions, updatePlot); 
+    
+
+
 
   //uses numerical argument
   //corresponding data stored in overlayContents array
@@ -238,13 +264,19 @@ function makeCaption(numb) {
   var terrain = currentSpeciesHomeworld.terrain;
   var population = currentSpeciesHomeworld.population;
 
+  
+
   //generates caption from the data in overlayContents
   var caption = 'A ' + desig + ' ' + classif + ' species, ' + name + ' speak ' + lang +
 '. Their lifespan is ' + life + '. They come from the ' + climate + ' planet ' + planet + 
 ',' + ' a ' + ' world with a population of ' + population + '.' + ' ' + name + 
-' appeared in ' + currentSpeciesFilm + '.';  
+' appeared in ' + currentSpeciesFilm + '. In case you missed it, '; 
+  
+  
+  var finalCaption = caption.concat(shortPlot);
+  console.log(finalCaption);
 
-  prepOverlay(caption);
+  prepOverlay(finalCaption);
 };
 
 // Overlay nav arrow button function
