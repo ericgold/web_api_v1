@@ -5,8 +5,8 @@
 */
 
 // base variables
-var speciesSwapi = "http://swapi.co/api/species/";
-var omdb = "http://www.omdbapi.com/?";
+var speciesSwapi = "https://swapi.co/api/species/";
+var omdb = "https://www.omdbapi.com/?";
 
 var $gallery = $('.gallery');
 var $thumbnail = $('.thumbnail');
@@ -21,10 +21,6 @@ var thumbnailIndex = 0;
 
 // Variables for search 
 var $searchField = $("input.search");
-
-//var $galleryLength = $thumbnail.length;
-
-
 
 // constructor function for overlay info objects
 function Species(number, name, classification, designation, language, average_lifespan, homeworld) {
@@ -46,16 +42,13 @@ function addIndex() {
   thumbnailIndex += 1;
 }
 
-
-
-
 function getFilmInfo(i, speciesData) {
   var filmUrl = speciesData.films[0];
   var filmInfo = {};
 
 
   //sends another request for data from the first
-  //film listed for that species
+  //film in that species' film array
   $.getJSON(filmUrl, function(data) {
     filmInfo.title = data.title;
     filmInfo.episode = data.episode_id;
@@ -65,7 +58,6 @@ function getFilmInfo(i, speciesData) {
   getHomeworld(i, speciesData, filmInfo);
 }
 
-
 function getHomeworld(i, speciesData, filmInfo) {
   var planetUrl = speciesData.homeworld;
   var homeworld = {};
@@ -74,20 +66,14 @@ function getHomeworld(i, speciesData, filmInfo) {
   //sends another request for the homeworld data
   $.getJSON(planetUrl, function(data) {
     homeworld.name = data.name;
-    homeworld.rotationPeriod = data.rotation_period;
+    //homeworld.rotationPeriod = data.rotation_period;
     homeworld.climate = data.climate;
-    homeworld.terrain = data.terrain;
+    //homeworld.terrain = data.terrain;
     homeworld.population = data.population;
-    //can add more homeworld data here and include it in
-    //overlay contents via makeSpecies
     
     makeSpecies(i, speciesData, homeworld, filmObj);
-  });
-    
-  
+  }); 
 }
-
-
 
 function makeSpecies(i, speciesData, homeworld, filmObj) {
 
@@ -103,21 +89,14 @@ function makeSpecies(i, speciesData, homeworld, filmObj) {
 
   species.film = filmObj;
   overlayContents.push(species);
-  
 }
-
-
 
 function speciesTiles(data) {
   $.each(data.results, function(i, result) {
     var speciesData = data.results[i];
     //homeworld is different because it is stored as a url
     //needs another request to get its data
-    
-    getFilmInfo(i, speciesData);
-
-    
-    
+    getFilmInfo(i, speciesData); 
 
     //builds a thumbnail for each species name
     galleryHTML += '<div class="thumbnail"><p class="species-label">';
@@ -132,23 +111,15 @@ function speciesTiles(data) {
   //adds a numerical id to each thumbnail, starting at 0
   //(this should be changed to use the i from above somehow)
   $('.thumbnail').each(addIndex);
-
-
 }
 
-
+//main request from SWAPI
 $.getJSON(speciesSwapi, speciesTiles);
 
-
-
-
-
-
-
 /*
-***************************
-****** OVERLAY STUFF ******
-***************************
+*******************************
+*********** OVERLAY  **********
+*******************************
 */
 
 // variables for the lightbox overlay
@@ -225,6 +196,10 @@ function makeCaption(numb) {
 
   function updatePlot(data) {
     shortPlot = String(data.Plot);
+
+    if (shortPlot === "N/A") {
+      shortPlot = "You'll have to rent it. No plot summary is available.";
+    }
   }
 
   $.getJSON(omdb, omdbOptions, updatePlot); 
@@ -246,13 +221,11 @@ function makeCaption(numb) {
   var terrain = currentSpeciesHomeworld.terrain;
   var population = currentSpeciesHomeworld.population;
 
-  
-
   //generates caption from the data in overlayContents
   var caption = 'A ' + desig + ' ' + classif + ' species, ' + name + ' speak ' + lang +
-'. Their lifespan is ' + life + '. They come from the ' + climate + ' planet ' + planet + 
-',' + ' a ' + ' world with a population of ' + population + '.' + ' ' + name + 
-' appeared in ' + currentSpeciesFilm + '. In case you missed it: ' + '<br>' + shortPlot; 
+  '. Their lifespan is ' + life + '. They come from the ' + climate + ' planet ' + planet + 
+  ',' + ' a ' + ' world with a population of ' + population + '.' + ' ' + name + 
+  ' appeared in ' + currentSpeciesFilm + '. In case you missed it: ' + '<br>' + shortPlot; 
 
   prepOverlay(caption);
 }
@@ -320,6 +293,8 @@ var $languageRadio = $('#language-radio');
 
 
 function filterTest() {
+  //sortOverlayContents();
+
   if ($speciesRadio.prop("checked")) {
     filterName();
   } else if ($homeworldRadio.prop("checked")) {
@@ -328,6 +303,7 @@ function filterTest() {
     filterLanguage();
   } 
 }
+
 
 // filter function for search field
 function filterName() {
@@ -343,9 +319,9 @@ function filterName() {
     
     if (overlayContents[thumbId].name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
         $(this).fadeIn();
-      } else {
+    } else {
         $(this).fadeOut("fast");
-      }
+    }
   });
 }
 
@@ -360,11 +336,11 @@ function filterHomeworld() {
     //of the img child of the anchor child of the thumbnail div
     var thumbId = $(this).attr("id");
     
-    if (overlayContents[thumbId].homeworld.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+    if (overlayContents[thumbId].homeworld.name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
         $(this).fadeIn();
-      } else {
+    } else {
         $(this).fadeOut("fast");
-      }
+    }
   });
 }
 
@@ -381,9 +357,9 @@ function filterLanguage() {
     
     if (overlayContents[thumbId].language.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
         $(this).fadeIn();
-      } else {
+    } else {
         $(this).fadeOut("fast");
-      }
+    }
   });
 }
 
