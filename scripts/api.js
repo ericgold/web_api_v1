@@ -77,7 +77,7 @@ function getHomeworld(i, speciesData, filmInfo) {
     homeworld.rotationPeriod = data.rotation_period;
     homeworld.climate = data.climate;
     homeworld.terrain = data.terrain;
-    homeworld.population = data.population
+    homeworld.population = data.population;
     //can add more homeworld data here and include it in
     //overlay contents via makeSpecies
     
@@ -85,7 +85,7 @@ function getHomeworld(i, speciesData, filmInfo) {
   });
     
   
-};
+}
 
 
 
@@ -215,34 +215,16 @@ function makeCaption(numb) {
   var currentSpeciesData = overlayContents[index];
   var currentSpeciesHomeworld = currentSpeciesData.homeworld;
   var currentSpeciesFilm = currentSpeciesData.film.title;
-  var currentSpeciesFilmString = currentSpeciesFilm.toString();
+  var currentSpeciesFilmString = String(currentSpeciesFilm);
   //console.log(currentSpeciesFilmString);
 
   var omdbOptions = {
     t : currentSpeciesFilmString,
     type: "movie"
-  }
+  };
 
-  var shortPlot = '';
-
-/*
-  function updateShortPlot(plot) {
-    shortPlot = plot;
-    
-  }
-*/
   function updatePlot(data) {
-    console.log(data);
-    
-    shortPlot += data.Plot;
-    //shortPlot.toString();
-
-    //console.log(shortPlot);
-    //plotData = data.Plot;
-    //plotDataString = plotData.toString();
-    //updateShortPlot(plotDataString);
-    
-    
+    shortPlot = String(data.Plot);
   }
 
   $.getJSON(omdb, omdbOptions, updatePlot); 
@@ -270,14 +252,10 @@ function makeCaption(numb) {
   var caption = 'A ' + desig + ' ' + classif + ' species, ' + name + ' speak ' + lang +
 '. Their lifespan is ' + life + '. They come from the ' + climate + ' planet ' + planet + 
 ',' + ' a ' + ' world with a population of ' + population + '.' + ' ' + name + 
-' appeared in ' + currentSpeciesFilm + '. In case you missed it, '; 
-  
-  
-  var finalCaption = caption.concat(shortPlot);
-  console.log(finalCaption);
+' appeared in ' + currentSpeciesFilm + '. In case you missed it: ' + '<br>' + shortPlot; 
 
-  prepOverlay(finalCaption);
-};
+  prepOverlay(caption);
+}
 
 // Overlay nav arrow button function
 function prevNext(prev) {
@@ -295,7 +273,7 @@ function prevNext(prev) {
   } else if (navIndex > overlayContents.length - 1) {
     navIndex = 0;
   }
-};
+}
 
 //Cycles through images in overlay on arrow clicks
 $leftArrow.click(function(event){
@@ -331,6 +309,11 @@ $swapiOverlay.click(function(event) {
 $('.gallery').on('click', '.thumbnail', setIndex);
 
 
+/**********************************************
+***************** FILTER/SEARCH ***************
+***********************************************/
+
+
 var $speciesRadio = $('#species-radio');
 var $homeworldRadio = $('#homeworld-radio');
 var $languageRadio = $('#language-radio');
@@ -364,7 +347,7 @@ function filterName() {
         $(this).fadeOut("fast");
       }
   });
-};
+}
 
 function filterHomeworld() {
   //sets searchText as whatever is entered in search field
@@ -383,7 +366,7 @@ function filterHomeworld() {
         $(this).fadeOut("fast");
       }
   });
-};
+}
 
 function filterLanguage() {
   //sets searchText as whatever is entered in search field
@@ -402,7 +385,7 @@ function filterLanguage() {
         $(this).fadeOut("fast");
       }
   });
-};
+}
 
 // Triggers filter function on keyup in search field
 $searchField.keyup(filterTest);
