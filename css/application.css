@@ -155,14 +155,13 @@
       height: 500px; } }
   #swapi-inner-overlay:after {
     content: ' ';
-    background-image: linear-gradient(top, black 0%, transparent 100%);
-    pointer-events: none; }
+    background-image: linear-gradient(black 0%, transparent 100%); }
 
 .arrow {
   background-color: transparent;
   width: 15%;
   font-size: 4em;
-  padding: 40px 10px;
+  padding: 10px 10px;
   color: #FFFF82;
   border: none; }
 
@@ -178,7 +177,7 @@
 #swapi-caption {
   position: absolute;
   top: 100%;
-  animation: scroll 5s linear 1s infinite;
+  animation: scroll 45s linear 1s infinite;
   color: #FFFF82;
   font-family: Baloo Da, cursive;
   font-size: 2em;
