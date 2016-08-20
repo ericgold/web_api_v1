@@ -178,7 +178,7 @@
 #swapi-caption {
   position: absolute;
   top: 100%;
-  animation: scroll 60s linear 1s infinite;
+  animation: scroll 5s linear 1s infinite;
   color: #FFFF82;
   font-family: Baloo Da, cursive;
   font-size: 2em;
