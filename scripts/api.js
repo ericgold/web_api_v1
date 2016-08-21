@@ -132,6 +132,8 @@ var $rightArrow = $("<button class='arrow' id='right-arrow'>&#10095</button>");
 // Keep track of image index for prev/next navigation
 var navIndex;
 
+var shortPlot;
+
 $swapiOverlay.append($swapiInnerOverlay);
 //$swapiOverlay.append($swapiCaption);
 $('body').append($swapiOverlay);

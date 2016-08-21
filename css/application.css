@@ -154,7 +154,7 @@
   top: 0;
   left: 0;
   display: none;
-  text-align: center; }
+  text-align: justify; }
 
 #swapi-inner-overlay {
   display: -webkit-box;
@@ -175,7 +175,7 @@
   overflow: hidden;
   transform-origin: 50% 100%;
   -webkit-transform-origin: 50% 100%;
-  -moz-transform-origin: 50% 100%;
+  -moz-transform-origin: center bottom;
   transform: perspective(300px) rotateX(20deg);
   -webkit-transform: perspective(300px) rotateX(20deg);
   -moz-transform: perspective(300px) rotateX(20deg); }
