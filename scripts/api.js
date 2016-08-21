@@ -132,7 +132,7 @@ var $rightArrow = $("<button class='arrow' id='right-arrow'>&#10095</button>");
 // Keep track of image index for prev/next navigation
 var navIndex;
 
-
+var shortPlot;
 
 $swapiOverlay.append($swapiInnerOverlay);
 //$swapiOverlay.append($swapiCaption);
@@ -165,8 +165,6 @@ function sortOverlayContents() {
 }
 
 function setIndex() {
-  
-
   sortOverlayContents();
 
   //sets variable equal to the numerical id attr of the thumbnail
@@ -178,8 +176,14 @@ function setIndex() {
 
 function setIndexNav() {
     makeCaption(navIndex);
-  
-  
+}
+
+function updatePlot(data) {
+  shortPlot = String(data.Plot);
+
+  if (shortPlot === "N/A") {
+    shortPlot = "You'll have to rent it. No plot summary is available.";
+  }
 }
 
 function makeCaption(numb) {
@@ -189,28 +193,7 @@ function makeCaption(numb) {
   var currentSpeciesHomeworld = currentSpeciesData.homeworld;
   var currentSpeciesFilm = currentSpeciesData.film.title;
   var currentSpeciesFilmString = String(currentSpeciesFilm);
-  //console.log(currentSpeciesFilmString);
-
-  var shortPlot;
-
-  var omdbOptions = {
-    t : currentSpeciesFilmString,
-    type: "movie"
-  };
-
-  function updatePlot(data) {
-    shortPlot = String(data.Plot);
-
-    if (shortPlot === "N/A") {
-      shortPlot = "You'll have to rent it. No plot summary is available.";
-    }
-  }
-
-  $.getJSON(omdb, omdbOptions, updatePlot); 
     
-
-
-
   //uses numerical argument
   //corresponding data stored in overlayContents array
   var name = currentSpeciesData.name;
@@ -224,6 +207,13 @@ function makeCaption(numb) {
   var climate = currentSpeciesHomeworld.climate;
   var terrain = currentSpeciesHomeworld.terrain;
   var population = currentSpeciesHomeworld.population;
+
+  var omdbOptions = {
+    t : currentSpeciesFilmString,
+    type: "movie"
+  };
+
+  $.getJSON(omdb, omdbOptions, updatePlot); 
 
   //generates caption from the data in overlayContents
   var caption = 'A ' + desig + ' ' + classif + ' species, ' + name + ' speak ' + lang +
