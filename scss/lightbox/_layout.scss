@@ -27,7 +27,9 @@
 	transform-origin: 50% 100%;
 	-webkit-transform-origin: 50% 100%;
 
-	-moz-transform-origin: center bottom;
+
+	-moz-transform-origin: center 300px 300px;
+
 
 	transform: perspective(300px) rotateX(20deg);
 	-webkit-transform: perspective(300px) rotateX(20deg);

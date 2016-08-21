@@ -158,7 +158,7 @@ function sortOverlayContents() {
   // because of asynchronous return of homeworld data
   // or because of search activity?
   // sort overlayContents here by overlayContents.number,
-  // which correpsonds to the numerical id of the tile
+  // which correpsonds to the numerical id of the thumbnail
     overlayContents.sort(function(a, b) {
     return a.number - b.number;
   });
@@ -178,6 +178,10 @@ function setIndexNav() {
     makeCaption(navIndex);
 }
 
+
+
+var shortPlot;
+
 function updatePlot(data) {
   shortPlot = String(data.Plot);
 
@@ -193,6 +197,18 @@ function makeCaption(numb) {
   var currentSpeciesHomeworld = currentSpeciesData.homeworld;
   var currentSpeciesFilm = currentSpeciesData.film.title;
   var currentSpeciesFilmString = String(currentSpeciesFilm);
+
+  
+
+  var omdbOptions = {
+    t : currentSpeciesFilmString,
+    type: "movie"
+  };
+
+
+
+  $.getJSON(omdb, omdbOptions, updatePlot); 
+
     
   //uses numerical argument
   //corresponding data stored in overlayContents array
