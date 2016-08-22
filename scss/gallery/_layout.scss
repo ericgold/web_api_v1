@@ -3,11 +3,25 @@
 .main-header {
 	@include flexy(column, center);
 	justify-content: center;
-	//height: 7em;
 	padding: 1em .5em;
 	position: fixed;
 	width: 100%;
 	background-color: $black;
+}
+
+.main-header:hover .hint {
+	display: inline-block;
+}
+
+.hint {
+	display: none;
+	//position: absolute;
+	//margin-top: -0.75em;
+	margin: 0;
+	color: $secondary-color;
+	font-family: $font-primary;
+	font-size: 0.75em;
+	z-index: 100;
 }
 
 
@@ -61,12 +75,9 @@
 
 	}
 
-	
-
 	input[type="radio"] {
 		display: none;
 		margin-right: 0.5em;
-
 	}
 
 	input[type="radio"]:checked + label span {
@@ -77,11 +88,7 @@
 		@include flexy(row);
 		justify-content: space-around;
 		margin: 1em auto;
-
 	}
-
-
-
 }
 
 
@@ -94,7 +101,7 @@
 	width: 100%;
 	max-width: 1200px;
 	margin: 0px auto;
-	padding-top: 11em;
+	padding-top: 12em;
 	background-color: $black;
 
 	@include mq(small-medium) {

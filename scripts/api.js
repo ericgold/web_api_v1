@@ -1,12 +1,15 @@
+
 /*
-************************
-*** Script for SWAPI ***
-************************
+***************************
+*********** SWAPI *********
+***************************
 */
 
 // base variables
 var speciesSwapi = "https://swapi.co/api/species/";
 var omdb = "https://www.omdbapi.com/?";
+
+var $searchField = $("#search-input");
 
 var $gallery = $('.gallery');
 var $thumbnail = $('.thumbnail');
@@ -19,8 +22,7 @@ var overlayContents = [];
 // used for adding numerical ids to thumbnails
 var thumbnailIndex = 0;
 
-// Variables for search 
-var $searchField = $("input.search");
+
 
 // constructor function for overlay info objects
 function Species(number, name, classification, designation, language, average_lifespan, homeworld) {
@@ -107,7 +109,7 @@ function speciesTiles(data) {
   //removes 'undefined' from the galleryHTML 
   var trimmedGalleryHTML = galleryHTML.substr(9);
   //adds generated thumbnails to the gallery
-  $('.gallery').append(trimmedGalleryHTML);
+  $gallery.append(trimmedGalleryHTML);
   //adds a numerical id to each thumbnail, starting at 0
   //(this should be changed to use the i from above somehow)
   $('.thumbnail').each(addIndex);
@@ -129,8 +131,11 @@ var $swapiCaption = $("<p id='swapi-caption'></p>");
 var $leftArrow = $("<button class='arrow' id='left-arrow'>&#10094</button>");
 var $rightArrow = $("<button class='arrow' id='right-arrow'>&#10095</button>");
 
-// Keep track of image index for prev/next navigation
+// keep track of image index for prev/next navigation
 var navIndex;
+
+// variable for storing the plot from the OMDB API
+var shortPlot;
 
 $swapiOverlay.append($swapiInnerOverlay);
 //$swapiOverlay.append($swapiCaption);
@@ -176,11 +181,9 @@ function setIndexNav() {
     makeCaption(navIndex);
 }
 
-
-var shortPlot;
-
 function updatePlot(data) {
   shortPlot = String(data.Plot);
+  
 
   if (shortPlot === "N/A") {
     shortPlot = "You'll have to rent it. No plot summary is available.";
@@ -202,12 +205,9 @@ function makeCaption(numb) {
   };
 
 
-
+  // make request to OMDB API to get the plot summary of the film
   $.getJSON(omdb, omdbOptions, updatePlot); 
     
-
-
-
   //uses numerical argument
   //corresponding data stored in overlayContents array
   var name = currentSpeciesData.name;
