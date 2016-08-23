@@ -174,23 +174,14 @@ function setIndex() {
   var index = $(this).attr('id');
   //matches navIndex to the numerical id attr of the thumbnail
   navIndex = index;
-  makeCaption(navIndex);
+  getPlot(navIndex);
 }
 
 function setIndexNav() {
-    makeCaption(navIndex);
+    getPlot(navIndex);
 }
 
-function updatePlot(data) {
-  shortPlot = String(data.Plot);
-  
-
-  if (shortPlot === "N/A") {
-    shortPlot = "You'll have to rent it. No plot summary is available.";
-  }
-}
-
-function makeCaption(numb) {
+function getPlot(numb) {
   var index = numb;
 
   var currentSpeciesData = overlayContents[index];
@@ -198,18 +189,24 @@ function makeCaption(numb) {
   var currentSpeciesFilm = currentSpeciesData.film.title;
   var currentSpeciesFilmString = String(currentSpeciesFilm);
   
-
   var omdbOptions = {
     t : currentSpeciesFilmString,
     type: "movie"
   };
 
-
   // make request to OMDB API to get the plot summary of the film
-  $.getJSON(omdb, omdbOptions, updatePlot); 
-    
-  //uses numerical argument
-  //corresponding data stored in overlayContents array
+  $.getJSON(omdb, omdbOptions, function(data) {
+      var shortPlot = String(data.Plot);
+      if (shortPlot === "N/A") {
+        shortPlot = "You'll have to rent it. No plot summary is available.";
+      }
+      makeCaption(currentSpeciesData, currentSpeciesHomeworld, currentSpeciesFilm, shortPlot);
+  }); 
+}
+
+
+function makeCaption(currentSpeciesData, currentSpeciesHomeworld, currentSpeciesFilm, shortPlot) {
+ 
   var name = currentSpeciesData.name;
   var classif = currentSpeciesData.classification;
   var desig = currentSpeciesData.designation;
@@ -231,7 +228,9 @@ function makeCaption(numb) {
   prepOverlay(caption);
 }
 
-// Overlay nav arrow button function
+
+// OVERLAY NAVIGATION
+
 function prevNext(prev) {
   //when prev is false, increase index
   //when prev is true, decrease index
@@ -273,7 +272,7 @@ $(document).bind('keydown', function(event) {
   }
 });
 
-
+// CANCEL OVERLAY ON CLICK
 $swapiOverlay.click(function(event) {
   if(event.target.id == "swapi-overlay")
   $(this).slideUp("fast");
