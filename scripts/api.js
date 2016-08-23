@@ -184,8 +184,6 @@ function setIndexNav() {
 
 function updatePlot(data) {
   shortPlot = String(data.Plot);
-  
-
   if (shortPlot === "N/A") {
     shortPlot = "You'll have to rent it. No plot summary is available.";
   }
@@ -199,18 +197,14 @@ function makeCaption(numb) {
   var currentSpeciesFilm = currentSpeciesData.film.title;
   var currentSpeciesFilmString = String(currentSpeciesFilm);
 
-  
-
   var omdbOptions = {
     t : currentSpeciesFilmString,
     type: "movie"
   };
 
-
   // make request to OMDB API to get the plot summary of the film
   $.getJSON(omdb, omdbOptions, updatePlot); 
 
-    
   //uses numerical argument
   //corresponding data stored in overlayContents array
   var name = currentSpeciesData.name;
@@ -224,13 +218,6 @@ function makeCaption(numb) {
   var climate = currentSpeciesHomeworld.climate;
   var terrain = currentSpeciesHomeworld.terrain;
   var population = currentSpeciesHomeworld.population;
-
-  var omdbOptions = {
-    t : currentSpeciesFilmString,
-    type: "movie"
-  };
-
-  $.getJSON(omdb, omdbOptions, updatePlot); 
 
   //generates caption from the data in overlayContents
   var caption = 'A ' + desig + ' ' + classif + ' species, ' + name + ' speak ' + lang +
