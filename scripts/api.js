@@ -112,7 +112,7 @@ function speciesTiles(data) {
   $gallery.append(trimmedGalleryHTML);
   //adds a numerical id to each thumbnail, starting at 0
   //(this should be changed to use the i from above somehow)
-  $('.thumbnail').each(addIndex);
+  $thumbnail.each(addIndex);
 }
 
 //main request from SWAPI
@@ -279,7 +279,7 @@ $swapiOverlay.click(function(event) {
 });
 
 
-$('.gallery').on('click', '.thumbnail', setIndex);
+$gallery.on('click', '.thumbnail', setIndex);
 
 
 /**********************************************
@@ -312,7 +312,7 @@ function filterName() {
   //return the overlayContents to be in sync with thumbnail ids
   sortOverlayContents();
   //for each thumbnail div
-  $(".thumbnail").each(function(){
+  $thumbnail.each(function(){
     //sets altText as the alt attribute 
     //of the img child of the anchor child of the thumbnail div
     var thumbId = $(this).attr("id");
@@ -331,7 +331,7 @@ function filterHomeworld() {
   //return the overlayContents to be in sync with thumbnail ids
   sortOverlayContents();
   //for each thumbnail div
-  $(".thumbnail").each(function(){
+  $thumbnail.each(function(){
     //sets altText as the alt attribute 
     //of the img child of the anchor child of the thumbnail div
     var thumbId = $(this).attr("id");
@@ -350,7 +350,7 @@ function filterLanguage() {
   //return the overlayContents to be in sync with thumbnail ids
   sortOverlayContents();
   //for each thumbnail div
-  $(".thumbnail").each(function(){
+  $thumbnail.each(function(){
     //sets altText as the alt attribute 
     //of the img child of the anchor child of the thumbnail div
     var thumbId = $(this).attr("id");
