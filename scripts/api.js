@@ -325,8 +325,7 @@ function filterHomeworld() {
   sortOverlayContents();
   //for each thumbnail div
   $('.thumbnail').each(function(){
-    //sets altText as the alt attribute 
-    //of the img child of the anchor child of the thumbnail div
+    //sets thumbId equal to the numerical id of the thumbnail
     var thumbId = $(this).attr("id");
     
     if (overlayContents[thumbId].homeworld.name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
@@ -344,8 +343,7 @@ function filterLanguage() {
   sortOverlayContents();
   //for each thumbnail div
   $('.thumbnail').each(function(){
-    //sets altText as the alt attribute 
-    //of the img child of the anchor child of the thumbnail div
+    //sets thumbId equal to the numerical id of the thumbnail
     var thumbId = $(this).attr("id");
     
     if (overlayContents[thumbId].language.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
