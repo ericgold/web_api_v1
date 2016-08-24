@@ -222,7 +222,7 @@ function makeCaption(currentSpeciesData, currentSpeciesHomeworld, currentSpecies
   var caption = 'A ' + desig + ' ' + classif + ' species, ' + name + ' speak ' + lang +
   '. Their lifespan is ' + life + '. They come from the ' + climate + ' planet ' + planet + 
   ',' + ' a ' + ' world with a population of ' + population + '.' + ' ' + name + 
-  ' appeared in ' + currentSpeciesFilm + '. In case you missed it: ' + '<br>' + shortPlot; 
+  ' appeared in ' + currentSpeciesFilm + '. In case you missed it: ' + '<br><br>' + shortPlot; 
 
   prepOverlay(caption);
 }

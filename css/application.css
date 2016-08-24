@@ -186,7 +186,7 @@
   overflow: hidden;
   transform-origin: 50% 100%;
   -webkit-transform-origin: 50% 100%;
-  -moz-transform-origin: center 300px 300px;
+  -moz-transform-origin: 50% 100%;
   transform: perspective(300px) rotateX(20deg);
   -webkit-transform: perspective(300px) rotateX(20deg);
   -moz-transform: perspective(300px) rotateX(20deg); }
@@ -198,6 +198,10 @@
       height: 500px; } }
   #swapi-inner-overlay:after {
     content: ' ';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 10%;
     background-image: linear-gradient(black 0%, transparent 100%); }
 
 .arrow {
@@ -218,7 +222,7 @@
   outline: none; }
 
 #swapi-caption {
-  position: absolute;
+  position: relative;
   top: 100%;
   animation: scroll 45s linear 1s infinite;
   -webkit-animation: scroll 45s linear 1s infinite;
