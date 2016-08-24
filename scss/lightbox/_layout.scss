@@ -8,7 +8,7 @@
 	top: 0;
 	left: 0;
 	display: none;
-	text-align: center;
+	text-align: justify;
 }
 
 #swapi-inner-overlay {
@@ -21,12 +21,13 @@
 	color: $secondary-color;
 
 	//scroll via https://www.sitepoint.com/css3-starwars-scrolling-text/
-	text-align: justify;
+	//text-align: justify;
+
 	overflow: hidden;
 	transform-origin: 50% 100%;
 	-webkit-transform-origin: 50% 100%;
+	-moz-transform-origin: 50% 100%;
 
-	-moz-transform-origin: center 300px 300px;
 
 	transform: perspective(300px) rotateX(20deg);
 	-webkit-transform: perspective(300px) rotateX(20deg);
@@ -44,10 +45,10 @@
 	&:after {
 		//position: absolute;
 		content: ' ';
-		//left: 0;
-		//right: 0;
-		//top: 0;
-		//bottom: 10%;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 10%;
 		background-image: linear-gradient(rgba(0,0,0,1) 0%, transparent 100%);
 	}
 }
@@ -75,9 +76,12 @@
 
 #swapi-caption {
 	//scroll
-	position: absolute;
+	position: relative;
 	top: 100%;
 	animation: scroll 45s linear 1s infinite;
+	-webkit-animation: scroll 45s linear 1s infinite;
+	-moz-animation: scroll 45s linear 1s infinite;
+	-o-animation: scroll 45s linear 1s infinite;
 
 	color: $secondary-color;
 	font-family: $font-primary;
@@ -93,6 +97,21 @@
 }
 
 @keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+@-webkit-keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+@-moz-keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+@-o-keyframes scroll {
 	0% { top: 100%; }
 	100% { top: -170%; }
 }
