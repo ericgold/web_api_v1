@@ -134,10 +134,6 @@ var $rightArrow = $("<button class='arrow' id='right-arrow'>&#10095</button>");
 // keep track of image index for prev/next navigation
 var navIndex;
 
-
-// variable for storing the plot from the OMDB API
-var shortPlot;
-
 $swapiOverlay.append($swapiInnerOverlay);
 //$swapiOverlay.append($swapiCaption);
 $('body').append($swapiOverlay);
