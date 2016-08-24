@@ -209,9 +209,9 @@ function makeCaption(currentSpeciesData, currentSpeciesHomeworld, currentSpecies
   var life = currentSpeciesData.average_lifespan;
 
   var planet = currentSpeciesHomeworld.name;
-  var rotationPeriod = currentSpeciesHomeworld.rotation_period;
+  //var rotationPeriod = currentSpeciesHomeworld.rotation_period;
   var climate = currentSpeciesHomeworld.climate;
-  var terrain = currentSpeciesHomeworld.terrain;
+  //var terrain = currentSpeciesHomeworld.terrain;
   var population = currentSpeciesHomeworld.population;
 
   //generates caption from the data in overlayContents
