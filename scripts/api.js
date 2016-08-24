@@ -112,7 +112,7 @@ function speciesTiles(data) {
   $gallery.append(trimmedGalleryHTML);
   //adds a numerical id to each thumbnail, starting at 0
   //(this should be changed to use the i from above somehow)
-  $thumbnail.each(addIndex);
+  $('.thumbnail').each(addIndex);
 }
 
 //main request from SWAPI
@@ -310,8 +310,7 @@ function filterName() {
   sortOverlayContents();
   //for each thumbnail div
   $thumbnail.each(function(){
-    //sets altText as the alt attribute 
-    //of the img child of the anchor child of the thumbnail div
+    //sets thumbId equal to the numerical id of the thumbnail
     var thumbId = $(this).attr("id");
     
     if (overlayContents[thumbId].name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
