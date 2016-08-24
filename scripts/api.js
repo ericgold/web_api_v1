@@ -12,7 +12,7 @@ var omdb = "https://www.omdbapi.com/?";
 var $searchField = $("#search-input");
 
 var $gallery = $('.gallery');
-var $thumbnail = $('.thumbnail');
+//var $thumbnail = $('.thumbnail');
 var galleryHTML;
 
 // array to hold objects containing info for each thumbnail's overlay
@@ -22,12 +22,8 @@ var overlayContents = [];
 // used for adding numerical ids to thumbnails
 var thumbnailIndex = 0;
 
-
-
-// constructor function for overlay info objects
+// constructor function for overlay info species objects
 function Species(number, name, classification, designation, language, average_lifespan, homeworld) {
-  //constructor function for species objects
-
   this.number = number;
   this.name = name;
   this.classification = classification;
@@ -44,28 +40,27 @@ function addIndex() {
   thumbnailIndex += 1;
 }
 
+//sends another request for data from the first
+  //film in that species' film array
 function getFilmInfo(i, speciesData) {
   var filmUrl = speciesData.films[0];
   var filmInfo = {};
 
-
-  //sends another request for data from the first
-  //film in that species' film array
   $.getJSON(filmUrl, function(data) {
     filmInfo.title = data.title;
-    filmInfo.episode = data.episode_id;
-    filmInfo.release_date = data.release_date; 
+    //filmInfo.episode = data.episode_id;
+    //filmInfo.release_date = data.release_date; 
   });
 
   getHomeworld(i, speciesData, filmInfo);
 }
 
+//sends another request for the homeworld data
 function getHomeworld(i, speciesData, filmInfo) {
   var planetUrl = speciesData.homeworld;
   var homeworld = {};
   var filmObj = filmInfo;
 
-  //sends another request for the homeworld data
   $.getJSON(planetUrl, function(data) {
     homeworld.name = data.name;
     //homeworld.rotationPeriod = data.rotation_period;
@@ -77,6 +72,8 @@ function getHomeworld(i, speciesData, filmInfo) {
   }); 
 }
 
+// make a species object with the data from the APIs
+// and add it to the overlayContents array
 function makeSpecies(i, speciesData, homeworld, filmObj) {
 
   var species = new Species (
@@ -93,11 +90,12 @@ function makeSpecies(i, speciesData, homeworld, filmObj) {
   overlayContents.push(species);
 }
 
+// create a tile for each species returned by swapi
+// add the tiles to the gallery
 function speciesTiles(data) {
   $.each(data.results, function(i, result) {
     var speciesData = data.results[i];
-    //homeworld is different because it is stored as a url
-    //needs another request to get its data
+    
     getFilmInfo(i, speciesData); 
 
     //builds a thumbnail for each species name
@@ -155,8 +153,7 @@ function prepOverlay(thing) {
 
 function sortOverlayContents() {
   // overlay contents may be out of order
-  // because of asynchronous return of homeworld data
-  // or because of search activity?
+  // because of asynchronous return of data
   // sort overlayContents here by overlayContents.number,
   // which correpsonds to the numerical id of the thumbnail
     overlayContents.sort(function(a, b) {
@@ -166,7 +163,6 @@ function sortOverlayContents() {
 
 function setIndex() {
   sortOverlayContents();
-
   //sets variable equal to the numerical id attr of the thumbnail
   var index = $(this).attr('id');
   //matches navIndex to the numerical id attr of the thumbnail
