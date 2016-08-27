@@ -6,7 +6,7 @@
 */
 
 // base variables
-var speciesSwapi = "https://swapi.co/api/species/";
+var speciesSwapi = "//swapi.co/api/species/";
 var omdb = "https://www.omdbapi.com/?";
 
 var $searchField = $("#search-input");
